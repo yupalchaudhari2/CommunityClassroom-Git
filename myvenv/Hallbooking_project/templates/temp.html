@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            font-family: Inter, sans-serif;
+            background-color: #f0f0f0;
+            overflow: hidden; /* Prevent scrolling */
+        }
+
+        .login-container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh; /* Full viewport height */
+            width: 100vw; /* Full viewport width */
+            background-color: #afc2cd;
+        }
+
+        .header-image-wrapper {
+            background-color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            box-sizing: border-box;
+            height: 80px; /* Adjust height as needed */
+        }
+
+        .header-image {
+            max-width: 150px; /* Adjust size as needed */
+            height: auto;
+        }
+
+        .content-wrapper {
+            display: flex;
+            flex: 1;
+            justify-content: space-evenly;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .side-image {
+            width: 40%;
+            max-width: 250px;
+            object-fit: contain;
+            border-radius: 20px;
+        }
+
+        .login-form-container {
+            width: 80vw; /* Adjust to fit the viewport width */
+            max-width: 580px; /* Maximum width */
+            aspect-ratio: 1 / 1; /* Maintain a square aspect ratio */
+            background-color: #fff;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            padding-top: 0;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Center content vertically */
+            align-items: center; /* Center content horizontally */
+        }
+
+        .login-form-wrapper {
+            display: flex;
+            flex-direction: column;
+            width: 100%; /* Ensure it uses the full width of the container */
+        }
+
+        .login-title {
+            color: #635e5e;
+            text-align: center;
+        }
+
+        .divider {
+            background-color: #000;
+            height: 2px;
+            border: none;
+            margin: 0 0 15px 0;
+        }
+
+        .form-fields {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        .form-row {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            width: 90%; /* Adjust width of each form row */
+            margin-bottom: 15px; /* Add some spacing between rows */
+        }
+
+        .input-label {
+            color: #000;
+            font-weight: 400;
+            margin-right: 10px;
+            flex-shrink: 0;
+            width: 80px; /* Fix label width to align the inputs */
+        }
+
+        .input-field {
+            flex-grow: 1;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .login-button, .forgot-password, .register-button {
+            background-color: #284b63;
+            color: #fff;
+            border: none;
+            padding: 15px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 15px;
+            width: 30%;
+            transition: background-color 0.3s ease;
+        }
+
+        .login-button:hover, .register-button:hover {
+            background-color: #1c3d5a;
+        }
+
+        .forgot-password {
+            width: 95%;
+            background-color: transparent;
+            color: #284b63;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+
+        .register-wrapper {
+            text-align: center;
+            margin-top: 0;
+        }
+
+        /* Mobile View Adjustments */
+        @media (max-width: 768px) {
+            .content-wrapper {
+                flex-direction: column;
+                justify-content: center;
+            }
+
+            .side-image {
+                display: none; /* Hide logo on mobile */
+            }
+
+            .login-form-container {
+                width: 90vw; /* Full width for mobile */
+                max-width: none; /* Remove max-width constraint */
+                height: auto; /* Remove fixed aspect ratio */
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Softer shadow */
+            }
+
+            .form-row {
+                width: 100%; /* Full width of form rows on mobile */
+                margin-bottom: 10px; /* Slightly smaller spacing */
+            }
+
+            .input-field {
+                font-size: 14px; /* Smaller input text for mobile */
+                padding: 10px; /* Reduced padding */
+            }
+
+            .login-button, .register-button {
+                width: 80%; /* Full width buttons on mobile */
+                font-size: 14px; /* Slightly smaller font size */
+                padding: 12px; /* Adjust button padding */
+            }
+
+            .forgot-password {
+                font-size: 14px; /* Smaller font for mobile */
+                text-align: center; /* Center forgot password link */
+                width: 100%; /* Full width link */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <header class="header-image-wrapper">
+            <img src="charusat_logo.png" class="header-image" alt="Header image" />
+        </header>
+        <div class="content-wrapper">
+            <img loading="lazy" src="charusat_round_logo.png" class="side-image" alt="Side image" />
+            <main class="login-form-container">
+                <div class="login-form-wrapper">
+                    <h1 class="login-title">Login</h1>
+                    <hr class="divider" />
+                    <form class="form-fields" method="POST" action="/login/">
+                        {% csrf_token %}
+                        <div class="form-row">
+                            <label for="email" class="input-label">Email*</label>
+                            <input type="email" id="email" class="input-field" required />
+                        </div>
+                        <div class="form-row">
+                            <label for="username" class="input-label">Username*</label>
+                            <input type="text" id="username" class="input-field" required />
+                        </div>
+                        <div class="form-row">
+                            <label for="password" class="input-label">Password*</label>
+                            <input type="password" id="password" class="input-field" required />
+                        </div>
+                        <!-- CAPTCHA Section -->
+                        <div class="form-row">
+                            <label for="captcha" class="input-label">Captcha*</label>
+                            <input type="text" id="captcha" class="input-field" name="captcha" required />
+                        </div>
+                        <div class="form-row">
+                            <img src="{% url 'generate_captcha' %}" alt="CAPTCHA Image" />
+                            <button type="button" onclick="location.reload()">Reload CAPTCHA</button>
+                        </div>
+                        <button type="submit" class="login-button">Login</button>
+                        <a href="#" class="forgot-password">Forget password?</a>
+                    </form>
+                    <hr class="divider" />
+                    <div class="register-wrapper">
+                        <a href="#" class="register-button">Register</a>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</body>
+</html>
